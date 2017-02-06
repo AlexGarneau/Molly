@@ -1,15 +1,16 @@
 (function (scope) {
     "use strict";
 
-    var GameMemory = function () {
-        this.init();
+    var s = {};
+
+    s.Instance = null;
+    s.icon = "assets/images/icon.png";
+
+    var p = {};
+    p.initialize = function () {
+        s.Instance = this;
     };
-    var p = GameMemory.prototype;
 
-    p.init = function () {
-
-    };
-
-    scope.GameMemory = GameMemory;
+    scope.GameMemory = Backbone.View.extends(p, s);
 
 }(window));

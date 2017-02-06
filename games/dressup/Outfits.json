@@ -1,0 +1,65 @@
+{
+  "outfits": [
+    {
+      "name": "beautiful",
+      "head": {
+        "main-image": "assets/images/main-head-beautiful.png",
+        "hint-text": "",
+        "hint-image": "assets/images/hint-head-beautiful.png"
+      },
+      "body": {
+        "main-image": "assets/images/main-body-beautiful.png",
+        "hint-text": "",
+        "hint-image": "assets/images/hint-body-beautiful.png"
+      },
+      "feet": {
+        "main-image": "assets/images/main-feet-beautiful.png",
+        "hint-text": "",
+        "hint-image": "assets/images/hint-feet-beautiful.png"
+      },
+      "victory-image": "assets/images/victory-beautiful.png"
+    },
+
+    {
+      "name": "adventurous",
+      "head": {
+        "main-image": "assets/images/main-head-adventurous.png",
+        "hint-text": "",
+        "hint-image": "assets/images/hint-head-adventurous.png"
+      },
+      "body": {
+        "main-image": "assets/images/main-body-adventurous.png",
+        "hint-text": "",
+        "hint-image": "assets/images/hint-body-adventurous.png"
+      },
+      "feet": {
+        "main-image": "assets/images/main-feet-adventurous.png",
+        "hint-text": "",
+        "hint-image": "assets/images/hint-feet-adventurous.png"
+      },
+      "victory-image": "assets/images/victory-adventurous.png"
+    },
+
+    {
+      "name": "silly",
+      "head": {
+        "main-image": "assets/images/main-head-silly.png",
+        "hint-text": "",
+        "hint-image": "assets/images/hint-head-silly.png"
+      },
+      "body": {
+        "main-image": "assets/images/main-body-silly.png",
+        "hint-text": "",
+        "hint-image": "assets/images/hint-body-silly.png"
+      },
+      "feet": {
+        "main-image": "assets/images/main-feet-silly.png",
+        "hint-text": "",
+        "hint-image": "assets/images/hint-feet-silly.png"
+      },
+      "victory-image": "assets/images/victory-silly.png"
+    }
+
+  ]
+
+}

@@ -1,15 +1,16 @@
 (function (scope) {
     "use strict";
 
-    var GameDressup = function () {
-        this.init();
+    var s = {};
+
+    s.Instance = null;
+    s.icon = "assets/images/icon.png";
+
+    var p = {};
+    p.initialize = function () {
+        s.Instance = this;
     };
-    var p = GameDressup.prototype;
 
-    p.init = function () {
-
-    };
-
-    scope.GameDressup = GameDressup;
+    scope.GameDressup = Backbone.View.extends(p, s);
 
 }(window));
