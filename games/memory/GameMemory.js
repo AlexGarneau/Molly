@@ -3,14 +3,14 @@
 
     var s = {};
 
-    s.Instance = null;
     s.icon = "assets/images/icon.png";
 
     var p = {};
+
     p.initialize = function () {
-        s.Instance = this;
+        scope.AbstractView.prototype.initialize.call();
     };
 
-    scope.GameMemory = Backbone.View.extends(p, s);
+    scope.GameMemory = scope.AbstractView.extend(p, s);
 
 }(window));

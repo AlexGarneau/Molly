@@ -4,11 +4,11 @@
     var s = {};
 
     s.COMPLETE = "complete";
-    s.Instance = null;
 
     var p = {};
+
     p.initialize = function () {
-        s.Instance = this;
+         scope.AbstractView.prototype.initialize.call();
     };
 
     p.start = function () {
@@ -19,6 +19,6 @@
         this.trigger(s.COMPLETE);
     };
 
-    scope.IntroCutsceneDressup = Backbone.View.extends(p, s);
+    scope.IntroCutsceneDressup = scope.AbstractView.extend(p, s);
 
 }(window));
