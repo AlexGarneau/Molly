@@ -19,6 +19,9 @@
     p.STATE_LOCK = 2;
 
     p.container = null;
+
+    p.matchingCard = null;
+
     p.cardBack = null;
     p.cardFront = null;
     p.cardFrontLock = null;
@@ -57,13 +60,45 @@
       if (this.state == this.STATE_HIDDEN) {
         this.state = this.STATE_SHOW;
       }
+
+      if (this._cardBackTween) {
+          this._cardBackTween.setPosition(this._cardBackTween.duration, 0);
+          createjs.Tween.removeTweens(this._cardBackTween);
+      }
+      if (this._cardFrontTween) {
+          this._cardFrontTween.setPosition(this._cardFrontTween.duration, 0);
+          createjs.Tween.removeTweens(this._cardFrontTween);
+      }
+
+      this._cardBackTween = createjs.Tween.get(this.cardBack)
+        .to({scaleX: 1, scaleY: 1, alpha: 1}, 0)
+        .to({scaleX: 0, scaleY: 1.3}, 1000, {ease: createjs.Ease.sineIn()}),
+        .to({alpha: 1}, 0);
+      this._cardFrontTween = createjs.Tween.get(this.cardFront)
+        .to({scaleX: 0, scaleY: 1.3, alpha: 0}, 0),
+        .wait(1000),
+        .to({alpha: 1}, 0)
+        .to({scaleX: 1, scaleY: 1}, 1000, {ease: createjs.Ease.sineOut()})
+        .call();
     }
 
     p.hide = function () {
       // Plays reverse flip animation
       if (this.state == this.STATE_SHOW) {
-        this.state = this.STATE_HIDDEN;
+          this.state = this.STATE_HIDDEN;
       }
+
+      if (this._cardBackTween) {
+          this._cardBackTween.setPosition(this._cardBackTween.duration, 0);
+          createjs.Tween.removeTweens(this.cardBack);
+      }
+      if (this._cardFrontTween) {
+          this._cardFrontTween.setPosition(this._cardFrontTween.duration, 0);
+          createjs.Tween.removeTweens(this.cardFront);
+      }
+
+      this._cardBackTween = createjs.Tween.get(this.cardBack);
+      this._cardFrontTween = createjs.Tween.get(this.cardFront);
     }
 
     p.lock = function () {
@@ -71,6 +106,12 @@
       if (this.state == this.STATE_SHOW) {
         this.state = this.STATE_LOCK;
       }
+
+      this.cardFront.alpha = 0;
+      this.cardBack.alpha = 0;
+      this.cardFrontLock.alpha = 1;
+
+      this._cardFrontTween = createjs.Tween.get(this.cardFrontLock.container);
     }
 
     p.unlock = function () {

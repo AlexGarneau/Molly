@@ -8,10 +8,10 @@
 
     var p = {};
     p.container = null;
-
     p.mode = null;
 
     p.initialize = function (mode) {
+        scope.AbstractView.prototype.initialize.call();
         s.Instance = this;
         this.container = new createjs.Container();
     };

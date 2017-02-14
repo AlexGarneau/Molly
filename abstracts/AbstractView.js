@@ -12,6 +12,10 @@
         this.container = new createjs.Container();
     };
 
+    p.reset = function () {
+      this.container.empty();
+    }
+
     scope.AbstractView = Backbone.View.extends(p, s);
 
 }(window));

@@ -2,7 +2,7 @@
     "use strict";
 
     var s = {};
-    
+
     s.icon = "assets/images/icon.png";
 
     var p = {};

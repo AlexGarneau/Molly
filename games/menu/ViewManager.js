@@ -10,6 +10,7 @@
     s.GAME_MEMORY = "gameMemory";
 
     s.Instance = null;
+    s.Stage = null;
     s.icon = "assets/images/icon.png";
 
     var p = {};
@@ -30,6 +31,7 @@
 
     p.initialize  = function (stage) {
         s.Instance = this;
+        s.Stage = stage;
         this.stage = stage;
 
         this.menu = new Menu();
@@ -39,6 +41,9 @@
         this.gameMemory = new GameMemory();
 
         this.allViews = [this.menu, this.loader, this.introCutsceneDressup, this.gameDressup, this.gameMemory];
+
+        // Initial view. For now, start with the Memory Game, as it's the only game there is.
+        this.showView(s.GAME_MEMORY);
     };
 
     p.showView = function (view) {
@@ -50,14 +55,19 @@
 
         switch (view) {
             case s.MENU:
+              this.stage.addChild(this.menu.container);
               break;
             case s.LOADER:
+              this.stage.addChild(this.loader.container);
               break;
             case s.INTRO_DRESSUP:
+              this.stage.addChild(this.introCutsceneDressup.container);
               break;
             case s.GAME_DRESSUP:
+              this.stage.addChild(this.gameDressup.container);
               break;
             case s.GAME_MEMORY:
+              this.stage.addChild(this.gameMemory.container);
               break;
             default: break;
         }
