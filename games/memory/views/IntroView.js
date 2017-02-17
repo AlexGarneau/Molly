@@ -30,6 +30,9 @@
         var stageWidth = scope.ViewManager.Stage.stageWidth;
         var stageHeight = scope.ViewManager.Stage.stageHeight;
 
+        var buttonWidth = stageWidth * 2 / 3;
+        var buttonHeight = stageHeight / 8;
+
         this.title.x = (stageWidth - this.title.width) / 2;
         this.title.y = stageHeight / 4;
 
