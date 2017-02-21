@@ -13,9 +13,9 @@
     };
 
     p.reset = function () {
-      this.container.empty();
+      this.container.removeAllChildren();
     }
 
-    scope.AbstractView = Backbone.View.extends(p, s);
+    scope.AbstractView = Backbone.View.extend(p, s);
 
 }(window));

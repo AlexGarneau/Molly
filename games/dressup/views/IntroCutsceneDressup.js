@@ -8,7 +8,7 @@
     var p = {};
 
     p.initialize = function () {
-         scope.AbstractView.prototype.initialize.call();
+         scope.AbstractView.prototype.initialize.call(this);
     };
 
     p.start = function () {

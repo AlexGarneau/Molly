@@ -2,8 +2,8 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-        <title>Choose A Game!</title>
-        <style id="Canvas" type="text/css">
+        <title>Molly's Memory Game</title>
+        <style type="text/css">
             #MainStage {
                 position: absolute;
                 left: 50%;
@@ -12,28 +12,36 @@
                 -webkit-transform: translate(-50%, -50%);
                 -moz-transform: translate(-50%, -50%);
             }
+
+            @font-face {
+                font-family: "Ostrich";
+                src: url("fonts/ostrich-sans-rounded.eot");
+                src: url('fonts/ostrich-sans-rounded.woff') format('woff'),
+                     url('fonts/ostrich-sans-rounded.ttf') format('truetype');
+            }
         </style>
     </head>
 
     <body>
-        <script src="https://code.createjs.com/createjs-2015.11.26.min.js" />
-        <script src="thirdparty/Backbone.js" />
-        <script src="https://code.jquery.com/jquery-3.1.1.min.js" integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8=" crossorigin="anonymous"></script>
+        <script type="text/javascript" src="https://code.createjs.com/createjs-2015.11.26.min.js"></script>
+        <script type="text/javascript" src="thirdparty/jquery-3.1.1.min.js"></script>
+        <script type="text/javascript" src="thirdparty/underscore.js"></script>
+        <script type="text/javascript" src="thirdparty/backbone.js"></script>
 
-        <script src="dressup/views/IntroCutsceneDressup.js" />
-        <script src="dressup/GameDressup.js" />
+        <script src= "abstracts/AbstractView.js"></script>
 
-        <script src="memory/data/Card.js" />
-        <script src="memory/data/Firework.js" />
-        <script src="memory/views/GameView.js" />
-        <script src="memory/views/IntroView.js" />
-        <script src="memory/GameMemory.js" />
+        <script src="games/memory/data/Button.js"></script>
+        <script src="games/memory/data/Card.js"></script>
+        <script src="games/memory/data/Firework.js"></script>
+        <script src="games/memory/views/GameView.js"></script>
+        <script src="games/memory/views/IntroView.js"></script>
+        <script src="games/memory/GameMemory.js"></script>
 
-        <script src="menu/Loader.js" />
-        <script src="menu/Menu.js" />
-        <script src="menu/ViewManager.js" />
+        <script src="games/menu/Loader.js"></script>
+        <script src="games/menu/Menu.js"></script>
+        <script src="games/menu/ViewManager.js"></script>
 
-        <script src="index.js" />
+        <script src="index.js"></script>
 
         <canvas id="MainStage" width="1024" height="768"></canvas>
     </body>

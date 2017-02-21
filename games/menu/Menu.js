@@ -3,7 +3,7 @@
 
     var s = {};
 
-    s.icon = "assets/images/icon.png";
+    s.icon = "/assets/images/icon.png";
 
     var p = {};
 
@@ -11,7 +11,7 @@
     p.buttonGameMemory = null;
 
     p.initialize  = function () {
-        scope.AbstractView.prototype.initialize.call();
+        scope.AbstractView.prototype.initialize.call(this);
     };
 
     scope.Menu = scope.AbstractView.extend(p, s);
