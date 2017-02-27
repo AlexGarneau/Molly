@@ -3,35 +3,18 @@
 
     var s = {};
     s.CLICKED = "clicked";
+    s.TYPE_BOX = "button_type_box";
+    s.TYPE_ARROW = "button_type_arrow";
 
     s.BUTTON_BG_UP = "games/memory/assets/images/ButtonUp.png";
     s.BUTTON_BG_OVER = "games/memory/assets/images/ButtonOver.png";
     s.BUTTON_BG_DOWN = "games/memory/assets/images/ButtonDown.png";
 
-    var p = {
-          get width() {
-            return this.bg_up ? this.bg_up.image.width : 0;
-          },
-          set width(value) {
-            if (this.bg_up) {
-              this.bg_up.image.width = value;
-              this.bg_over.image.width = value;
-              this.bg_down.image.width = value;
-              this.label.x = (value - this.label.textWidth) / 2;
-            }
-          },
-          get height() {
-            return this.bg_up ? this.bg_up.image.height : 0;
-          },
-          set height(value) {
-            if (this.bg_up) {
-              this.bg_up.image.height = value;
-              this.bg_over.image.height = value;
-              this.bg_down.image.height = value;
-              this.label.y = (this.bg_up.height - this.label.textHeight) / 2;
-            }
-          }
-    };
+    s.BUTTON_ARROW_UP = "games/memory/assets/images/RightButtonUp.png";
+    s.BUTTON_ARROW_OVER = "games/memory/assets/images/RightButtonOver.png";
+    s.BUTTON_ARROW_DOWN = "games/memory/assets/images/RightButtonPress.png";
+
+    var p = {};
 
     p.container = null;
 
@@ -39,23 +22,45 @@
     p.bg_over = null;
     p.bg_down = null;
     p.label = null;
+    p.cover = null;
+    p.coverContainer = null;
+
+    p.width = 0;
+    p.height = 0;
+    p.scaleX = 1;
 
     p._isOver = false;
 
-    p.initialize = function (text) {
-        scope.Button.Instance = this;
+    p.initialize = function (text, type = s.TYPE_BOX) {
         this.container = new createjs.Container();
-        this.bg_up = new createjs.Bitmap(s.BUTTON_BG_UP);
-        this.bg_over = new createjs.Bitmap(s.BUTTON_BG_OVER);
-        this.bg_down = new createjs.Bitmap(s.BUTTON_BG_DOWN);
+
+        if (type == s.TYPE_ARROW) {
+          this.bg_up = new createjs.Bitmap(s.BUTTON_ARROW_UP);
+          this.bg_over = new createjs.Bitmap(s.BUTTON_ARROW_OVER);
+          this.bg_down = new createjs.Bitmap(s.BUTTON_ARROW_DOWN);
+        } else {
+          this.bg_up = new createjs.Bitmap(s.BUTTON_BG_UP);
+          this.bg_over = new createjs.Bitmap(s.BUTTON_BG_OVER);
+          this.bg_down = new createjs.Bitmap(s.BUTTON_BG_DOWN);
+        }
+
         this.label = new createjs.Text(text, "40px Ostrich", 0);
+        this.coverContainer = new createjs.Container();
 
-        this.container.addEventListener("mousedown", this._onDown.bind(this));
-        this.container.addEventListener("mouseout", this._onOut.bind(this));
-        this.container.addEventListener("mouseover", this._onOver.bind(this));
-        this.container.addEventListener("click", this._onClick.bind(this));
+        // Cover is for receiving the mouse click.
+        this.cover = new createjs.Shape();
+        this.coverContainer.addChild(this.cover);
 
-        this.container.addChild(this.bg_up, this.bg_over, this.bg_down, this.label);
+        this.coverContainer.addEventListener("mousedown", this._onDown.bind(this));
+        this.coverContainer.addEventListener("mouseout", this._onOut.bind(this));
+        this.coverContainer.addEventListener("mouseover", this._onOver.bind(this));
+        this.coverContainer.addEventListener("click", this._onClick.bind(this));
+
+        this.container.addChild(this.bg_up, this.bg_over, this.bg_down, this.label, this.coverContainer);
+
+        this.bg_up.alpha = 1;
+        this.bg_over.alpha = 0;
+        this.bg_down.alpha = 0;
 
         this.label.set({
           textAlign: "center",
@@ -63,7 +68,40 @@
           x: this.bg_up.image.width / 2,
           y: this.bg_up.image.height / 2
         });
+        this.cover.graphics.beginFill("rgba(0, 0, 0, 0.01)");
+        this.cover.graphics.drawRect(0, 0, this.bg_up.image.width, this.bg_up.image.height);
+
+        this.width = this.bg_up.image.width;
+        this.height = this.bg_up.image.height;
     };
+
+    p.setWidth = function (value) {
+        if (this.bg_up) {
+            this.bg_up.image.width = value;
+            this.bg_over.image.width = value;
+            this.bg_down.image.width = value;
+            this.label.x = (value - this.label.textWidth) / 2;
+            this.width = value;
+        }
+    },
+    p.setHeight = function (value) {
+        if (this.bg_up) {
+            this.bg_up.image.height = value;
+            this.bg_over.image.height = value;
+            this.bg_down.image.height = value;
+            this.label.y = (this.bg_up.height - this.label.textHeight) / 2;
+            this.height = value;
+        }
+    }
+    p.setScaleX = function (value) {
+        if (this.bg_up) {
+            this.bg_up.scaleX = value;
+            this.bg_over.scaleX = value;
+            this.bg_down.scaleX = value;
+            this.cover.scaleX = value;
+            this.scaleX = value;
+        }
+    }
 
     p._onOver = function () {
         this.bg_up.alpha = 0;
@@ -86,7 +124,8 @@
         this.trigger(s.CLICKED);
         this.bg_up.alpha = this._isOver ? 0 : 1;
         this.bg_over.alpha = this._isOver ? 1 : 0;
-        this.bg_down.alpha = 1;
+        this.bg_down.alpha = 0;
+        scope.Sounds.playSound(scope.Sounds.MEMORY_SOUND_BUTTON);
     };
 
     scope.Button = Backbone.View.extend(p, s);

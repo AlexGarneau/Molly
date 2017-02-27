@@ -7,9 +7,6 @@
     s.INTRO_TITLE = "games/memory/assets/images/MollyTitle.png";
     s.INTRO_BG = "games/memory/assets/images/MollyCircle.png";
     s.INTRO_MOLLY = "games/memory/assets/images/MollyPigBKG.png";
-    s.BUTTON_BG_UP = "games/memory/assets/images/ButtonUp.png";
-    s.BUTTON_BG_OVER = "games/memory/assets/images/ButtonOver.png";
-    s.BUTTON_BG_DOWN = "games/memory/assets/images/ButtonDown.png";
 
     s.START_EASY = "startEasy";
     s.START_HARD = "startHard";
@@ -41,12 +38,15 @@
         this.poweredText.x = 30;
         this.poweredText.y = (stageHeight - this.poweredText.getMeasuredHeight() - 30);
 
-        this.easyBtn = new scope.Button("EASY");
-        this.hardBtn = new scope.Button("NORMAL");
+        this.easyBtn = new scope.Button("LEVEL 1");
+        this.hardBtn = new scope.Button("LEVEL 2");
         this.easyBtn.on(scope.Button.CLICKED, this._onEasyClick.bind(this));
         this.hardBtn.on(scope.Button.CLICKED, this._onHardClick.bind(this));
 
-        this.container.addChild(this.background, this.bgMolly, this.title, this.subtitle, this.poweredText, this.easyBtn.container, this.hardBtn.container);
+        this.instructionsBtn = new scope.Button("INSTRUCTIONS");
+        this.instructionsBtn.on(scope.Button.CLICKED, this._onInstructionsClick.bind(this));
+
+        this.container.addChild(this.background, this.bgMolly, this.title, this.subtitle, this.poweredText, this.easyBtn.container, this.hardBtn.container, this.instructionsBtn.container);
 
         var buttonWidth = stageWidth * 2 / 3;
         var buttonHeight = stageHeight / 8;
@@ -56,13 +56,18 @@
 
         this.subtitle.textAlign = "center";
         this.subtitle.x = (stageWidth - this.subtitle.getMeasuredWidth());
-        this.subtitle.y = stageHeight * 3 / 8;
+        this.subtitle.y = stageHeight * 11 / 32;
 
         this.easyBtn.container.x = stageWidth / 8;
-        this.easyBtn.container.y = stageHeight * 8 / 15;
-
         this.hardBtn.container.x = stageWidth / 8;
-        this.hardBtn.container.y = stageHeight * 3 / 4;
+        this.instructionsBtn.container.x = stageWidth / 8;
+
+        var buttonY = stageHeight - this.instructionsBtn.bg_up.image.height - 70;
+        this.instructionsBtn.container.y = buttonY;
+        buttonY -= this.hardBtn.height + 10;
+        this.hardBtn.container.y = buttonY;
+        buttonY -= this.easyBtn.height + 10;
+        this.easyBtn.container.y = buttonY;
     };
 
     p._onEasyClick = function () {
@@ -71,6 +76,10 @@
 
     p._onHardClick = function () {
         this.trigger(s.START_HARD);
+    };
+
+    p._onInstructionsClick = function () {
+        this.trigger(s.START_INSTRUCTIONS);
     };
 
     scope.IntroView = scope.AbstractView.extend(p, s);

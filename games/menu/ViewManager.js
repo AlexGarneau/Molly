@@ -4,22 +4,30 @@
     var s = {};
 
     s.GAME_MEMORY_ASSETS = [
-        "games/memory/assets/images/ButtonDown.png",
-        "games/memory/assets/images/ButtonOver.png",
-        "games/memory/assets/images/ButtonUp.png",
-        "games/memory/assets/images/card-image-01.png",
-        "games/memory/assets/images/card-image-02.png",
-        "games/memory/assets/images/card-image-03.png",
-        "games/memory/assets/images/card-image-04.png",
-        "games/memory/assets/images/card-image-05.png",
-        "games/memory/assets/images/card-image-06.png",
-        "games/memory/assets/images/CardBack.png",
-        "games/memory/assets/images/CardFace.png",
+        scope.Button.BUTTON_BG_UP,
+        scope.Button.BUTTON_BG_OVER,
+        scope.Button.BUTTON_BG_DOWN,
+        scope.Button.BUTTON_ARROW_UP,
+        scope.Button.BUTTON_ARROW_OVER,
+        scope.Button.BUTTON_ARROW_DOWN,
+        scope.Card.IMAGE_BACK,
+        scope.Card.IMAGE_FRONT,
+        scope.Card.IMAGE_1,
+        scope.Card.IMAGE_2,
+        scope.Card.IMAGE_3,
+        scope.Card.IMAGE_4,
+        scope.Card.IMAGE_5,
+        scope.Card.IMAGE_6,
+        scope.IntroView.INTRO_TITLE,
+        scope.IntroView.INTRO_BG,
+        scope.IntroView.INTRO_MOLLY,
         "games/memory/assets/images/molly-corner-shot.png",
-        "games/memory/assets/images/MollyPigBKG.png",
-        "games/memory/assets/images/MollyCircle.png",
-        "games/memory/assets/images/MollyTitle.png",
+        scope.InstructionsView.INTRUCTIONS_1,
+        scope.InstructionsView.INTRUCTIONS_2,
+        scope.InstructionsView.INTRUCTIONS_3,
+        scope.InstructionsView.INTRUCTIONS_4
     ];
+
     s.GAME_DRESSUP_ASSETS = [
 
     ];
@@ -34,15 +42,11 @@
     s.Stage = null;
     s.icon = "/assets/images/icon.png";
 
-
     s.DEBUG_CHECK = function (container, index = 0) {
       var string = "";
       for (var i = 0; i < index; i++) {
         string += "- ";
       }
-
-      // What am I checking, anyways?
-      console.log(string + container.x + " / " + container.y);
 
       if (container.children && container.children.length) {
         for (var j = 0; j < container.children.length; j++) {
@@ -68,11 +72,12 @@
     p.introCutsceneDressup = null;
 
     p.initialize  = function (stage) {
-        console.log("Starting the ViewManager.");
+        // console.log("Starting the ViewManager.");
 
         scope.ViewManager.Instance = this;
         scope.ViewManager.Stage = stage;
         this.stage = stage;
+        stage.enableMouseOver(10);
 
         this.menu = new scope.Menu();
       	this.loader = new scope.Loader();
@@ -109,12 +114,12 @@
             case s.GAME_DRESSUP:
               this._viewTarget = s.GAME_DRESSUP;
               this.stage.addChild(this.loader.container);
-              this.loader.loadAssets(s.GAME_DRESSUP_ASSETS);
+              this.loader.loadAssets([].concat(s.GAME_DRESSUP_ASSETS, scope.Sounds.getSoundManifest(s.GAME_DRESSUP)));
               break;
             case s.GAME_MEMORY:
               this._viewTarget = s.GAME_MEMORY;
               this.stage.addChild(this.loader.container);
-              this.loader.loadAssets(s.GAME_MEMORY_ASSETS);
+              this.loader.loadAssets([].concat(s.GAME_MEMORY_ASSETS, scope.Sounds.getSoundManifest(s.GAME_MEMORY)));
               break;
             default: break;
         }

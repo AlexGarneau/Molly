@@ -155,6 +155,7 @@
             createjs.Tween.get(this.cards[i].container)
               .wait(scope.Card.FLIP_TIME + 1000)
               .to({x: centerX, y: centerY}, 1000, createjs.Ease.sineInOut)
+              .call(this._onShuffleSound.bind(this))
               .wait(1000 * i / l)
               .to({x: centerX + this.cards[i].width / 2}, 100, createjs.Ease.sineOut)
               .to({x: centerX}, 100, createjs.Ease.sineIn)
@@ -164,6 +165,10 @@
         }
     };
 
+    p._onShuffleSound = function () {
+        scope.Sounds.playSound(scope.Sounds.MEMORY_SOUND_SHUFFLE);
+    };
+
     p._onShuffleComplete = function () {
         this._completeShuffle = true;
         this.canFlip = true;
@@ -171,6 +176,7 @@
 
     p._onCardClicked = function (card) {
         if (this.canFlip && card.state == scope.Card.STATE_HIDDEN) {
+            scope.Sounds.playSound(scope.Sounds.MEMORY_SOUND_FLIP);
             card.reveal();
             this.canFlip = false;
         }
@@ -185,6 +191,7 @@
           this.firstFlipped.lock();
           this.fireworks.burstGold(card.container.x, card.container.y);
           this.fireworks.burstGold(this.firstFlipped.container.x, this.firstFlipped.container.y);
+          scope.Sounds.playSound(scope.Sounds.MEMORY_SOUND_DING);
         } else {
           // Not a match. Delay for a second, then flip back over.
           this.canFlip = false;
@@ -219,6 +226,9 @@
         }
 
         // If we're here, that means we've won!
+
+        scope.Sounds.playSound(scope.Sounds.MEMORY_MUSIC_VICTORY);
+
         var origSpot;
         for (var i = 0, l = this.cards.length; i < l; i++) {
           origSpot = this._originalSpots[i];
@@ -295,6 +305,8 @@
       for (var i = cards.length - 1; i >= 0; i--) {
         cards[i].hide(500);
       }
+
+      scope.Sounds.playSound(scope.Sounds.MEMORY_SOUND_FLIP);
     };
 
     scope.GameView = scope.AbstractView.extend(p, s);

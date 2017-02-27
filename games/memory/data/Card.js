@@ -121,6 +121,7 @@
     };
 
     p.onClick = function (e) {
+        console.log("Clicked a card! " + this);
         this.trigger(s.REQUEST_FLIP, this);
     };
 
@@ -131,6 +132,7 @@
       }
 
       this.state = s.STATE_SHOW;
+      scope.Sounds.playSound(scope.Sounds.MEMORY_SOUND_FLIP);
 
       if (this._cardBackTween) {
           this._cardBackTween.setPosition(this._cardBackTween.duration, 0);

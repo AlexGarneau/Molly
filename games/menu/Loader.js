@@ -20,6 +20,12 @@
         this.loadText.x = (scope.ViewManager.Stage.canvas.width - this.loadText.getMeasuredWidth()) / 2;
         this.loadText.y = (scope.ViewManager.Stage.canvas.height - this.loadText.getMeasuredHeight()) / 2;
 
+        for (var i = assets.length - 1; i >= 0; i--) {
+          if (assets[i].type == "sound") {
+            createjs.Sound.registerSound(assets[i].src, assets[i].id, 2);
+          }
+        }
+
         var loadQueue = new createjs.LoadQueue(false);
         loadQueue.on("fileload", this.onFileComplete, (this));
         loadQueue.on("complete", this.onFullComplete, (this));
