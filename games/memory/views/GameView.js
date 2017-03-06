@@ -25,6 +25,8 @@
     p._completeDance = false;
     p._originalSpots = null;
 
+    p.backBtn = null;
+
     p.initialize = function (mode) {
         scope.AbstractView.prototype.initialize.call(this);
         scope.GameView.Instance = this;
@@ -44,6 +46,14 @@
 
         this.cardContainer = new createjs.Container();
         this.container.addChild(this.cardContainer);
+
+        this.backBtn = new scope.Button("BACK");
+        this.container.addChild(this.backBtn.container);
+        this.backBtn.setWidth(70);
+        this.backBtn.setHeight(40);
+        this.backBtn.container.x = 30;
+        this.backBtn.container.y = stageHeight - this.backBtn.height - 30;
+        this.backBtn.on(scope.Button.CLICKED, this._onBackClick.bind(this));
 
         if (mode == s.MODE_EASY) {
           this._setupEasyMode();
@@ -299,6 +309,12 @@
           this._completeDance = true;
           this.fireworks.reset();
         }
+    };
+
+    p._onBackClick = function () {
+        this.trigger(s.GAME_COMPLETE);
+        this._completeDance = true;
+        this.fireworks.reset();
     };
 
     p._reflipCards = function (cards) {

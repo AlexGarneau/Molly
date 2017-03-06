@@ -24,7 +24,9 @@
                 {id: s.MEMORY_SOUND_DING, src: "games/memory/assets/sounds/reward.mp3", type: "sound"},
                 {id: s.MEMORY_SOUND_FLIP, src: "games/memory/assets/sounds/card_flip.mp3", type: "sound"},
                 {id: s.MEMORY_SOUND_SHUFFLE, src: "games/memory/assets/sounds/card_shuffle.mp3", type: "sound"},
-                {id: s.MEMORY_SOUND_BUTTON, src: "games/memory/assets/sounds/boop.mp3", type: "sound"}
+                {id: s.MEMORY_SOUND_BUTTON, src: "games/memory/assets/sounds/boop.mp3", type: "sound"},
+                //{id: s.MEMORY_MUSIC_INTRO, src: "games/memory/assets/sounds/piano_flick.mp3", type: "sound"},
+                {id: s.MEMORY_MUSIC_VICTORY, src: "games/memory/assets/sounds/guitar_flick.mp3", type: "sound"}
               ];
               break;
         }
@@ -35,11 +37,12 @@
     s.playSound = function (soundID, loop = false) {
         if (scope.Sounds._currentlyLoopingSounds[soundID] && loop) {
           // Sound's already looping. Return.
+          scope.Sounds._currentlyLoopingSounds[soundID].play();
           return;
         }
 
         var sound = createjs.Sound.play(soundID);
-        sound.loop = loop;
+        sound.loop = loop ? -1 : 0;
         if (loop) {
           scope.Sounds._currentlyLoopingSounds[soundID] = sound;
         } else {
@@ -55,7 +58,9 @@
         var sound = scope.Sounds._currentlyPlayingSounds[soundID] || scope.Sounds._currentlyLoopingSounds[soundID];
         if (sound) {
           sound.stop();
-          delete scope.Sounds._currentlyPlayingSounds[soundID];
+          if (sound.loop != -1) {
+            delete scope.Sounds._currentlyPlayingSounds[soundID];
+          }
         }
     };
 

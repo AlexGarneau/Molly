@@ -29,6 +29,13 @@
     p.label3 = null;
     p.label4 = null;
 
+    p.card1 = null;
+    p.card2 = null;
+    p.card3 = null;
+    p.card4 = null;
+    p.card5 = null;
+    p.card6 = null;
+
     p.backBtn = null;
 
     p._pages = null;
@@ -72,49 +79,76 @@
         this._pageIndex = 0;
         this.container.addChild(this.nextBtn.container, this.page1);
 
-        var image = this.image1 = new createjs.Bitmap(s.INTRUCTIONS_1);
-        image.x = stageWidth - image.image.width + 100;
-        image.y = (stageHeight - image.image.height) / 4;
-        var label = this.label1 = new createjs.Text("Welcome to Molly's Memory Game!", "60px Ostrich", "#000000");
-        label.x = stageWidth / 10;
-        label.y = stageHeight / 3;
-        label.lineWidth = stageWidth / 3;
-        label.lineHeight = 50;
-        this.page1.addChild(image, label);
+        var c1 = this.card1 = new scope.Card(scope.Card.IMAGE_2, 140, 190);
+        var c2 = this.card2 = new scope.Card(scope.Card.IMAGE_2, 140, 190);
+        var c3 = this.card3 = new scope.Card(scope.Card.IMAGE_3, 140, 190);
+        var c4 = this.card4 = new scope.Card(scope.Card.IMAGE_3, 140, 190);
+        c1.setState(scope.Card.STATE_HIDDEN);
+        c2.setState(scope.Card.STATE_HIDDEN);
+        c3.setState(scope.Card.STATE_HIDDEN);
+        c4.setState(scope.Card.STATE_HIDDEN);
+        c1.container.x = c3.container.x = stageWidth - 280 - 60;
+        c2.container.x = c4.container.x = stageWidth - 140 - 30;
+        c1.container.y = c2.container.y = 260;
+        c3.container.y = c4.container.y = 480;
 
-        image = this.image2 = new createjs.Bitmap(s.INTRUCTIONS_2);
-        image.x = stageWidth - image.image.width + 100;
-        image.y = (stageHeight - image.image.height) / 4;
-        label = this.label2 = new createjs.Text("Click a card to flip it over!", "60px Ostrich", "#000000");
-        label.x = stageWidth / 10;
-        label.y = stageHeight / 3;
-        label.lineWidth = stageWidth / 3;
-        label.lineHeight = 50;
+        this.container.addChild(c1.container, c2.container, c3.container, c4.container);
 
-        this.page2.addChild(image, label);
-
-        image = this.image3 = new createjs.Bitmap(s.INTRUCTIONS_3);
+        /*var image = this.image1 = new createjs.Bitmap(s.INTRUCTIONS_1);
         image.x = stageWidth - image.image.width + 100;
-        image.y = (stageHeight - image.image.height) / 4;
-        label = this.label3 = new createjs.Text("Try to find its matching partner!", "60px Ostrich", "#000000");
+        image.y = (stageHeight - image.image.height) / 4;*/
+        var label = this.label1 = new createjs.Text("Welcome to Molly's Memory Game !", "60px Ostrich", "#000000");
         label.x = stageWidth / 10;
         label.y = stageHeight / 3;
         label.lineWidth = stageWidth / 3;
         label.lineHeight = 50;
 
-        this.page3.addChild(image, label);
+        this.page1.addChild(label);
+        //this.page1.addChild(image, label);
 
-        image = this.image4 = new createjs.Bitmap(s.INTRUCTIONS_4);
+        /*image = this.image2 = new createjs.Bitmap(s.INTRUCTIONS_2);
         image.x = stageWidth - image.image.width + 100;
-        image.y = (stageHeight - image.image.height) / 4;
-        label = this.label4 = new createjs.Text("You win if you can find them all!", "60px Ostrich", "#000000");
+        image.y = (stageHeight - image.image.height) / 4;*/
+        label = this.label2 = new createjs.Text("Click a card to flip it over !", "60px Ostrich", "#000000");
         label.x = stageWidth / 10;
         label.y = stageHeight / 3;
         label.lineWidth = stageWidth / 3;
         label.lineHeight = 50;
 
-        this.page4.addChild(image, label);
+        this.page2.addChild(label);
+        //this.page2.addChild(image, label);
+
+        /*image = this.image3 = new createjs.Bitmap(s.INTRUCTIONS_3);
+        image.x = stageWidth - image.image.width + 100;
+        image.y = (stageHeight - image.image.height) / 4;*/
+        label = this.label3 = new createjs.Text("Try to find its matching partner !", "60px Ostrich", "#000000");
+        label.x = stageWidth / 10;
+        label.y = stageHeight / 3;
+        label.lineWidth = stageWidth / 3;
+        label.lineHeight = 50;
+
+        this.page3.addChild(label);
+        //this.page3.addChild(image, label);
+
+        /*image = this.image4 = new createjs.Bitmap(s.INTRUCTIONS_4);
+        image.x = stageWidth - image.image.width + 100;
+        image.y = (stageHeight - image.image.height) / 4;*/
+        label = this.label4 = new createjs.Text("You win if you can find them all !", "60px Ostrich", "#000000");
+        label.x = stageWidth / 10;
+        label.y = stageHeight / 3;
+        label.lineWidth = stageWidth / 3;
+        label.lineHeight = 50;
+
+        this.page4.addChild(label);
+        //this.page4.addChild(image, label);
     };
+
+    p.reset = function () {
+      this._pageIndex = 0;
+      this.container.removeChild(this.prevBtn.container);
+      this.container.addChild(this.nextBtn.container);
+      this._updatePageStates();
+    }
 
     p._onPrevClick = function () {
         this._pageIndex--;
@@ -124,13 +158,8 @@
         } else {
           this.container.addChild(this.nextBtn.container);
         }
-        for (var i = this._pages.length - 1; i >= 0; i--) {
-          if (i == this._pageIndex) {
-            this.container.addChild(this._pages[i]);
-          } else {
-            this.container.removeChild(this._pages[i]);
-          }
-        }
+
+        this._updatePageStates();
     };
 
     p._onNextClick = function () {
@@ -141,12 +170,44 @@
       } else {
         this.container.addChild(this.prevBtn.container);
       }
+
+      this._updatePageStates();
+    };
+
+    p._updatePageStates = function () {
       for (var i = this._pages.length - 1; i >= 0; i--) {
         if (i == this._pageIndex) {
           this.container.addChild(this._pages[i]);
         } else {
           this.container.removeChild(this._pages[i]);
         }
+      }
+
+      switch (this._pageIndex) {
+        case 0:
+          this.card1.setState(scope.Card.STATE_HIDDEN);
+          this.card2.setState(scope.Card.STATE_HIDDEN);
+          this.card3.setState(scope.Card.STATE_HIDDEN);
+          this.card4.setState(scope.Card.STATE_HIDDEN);
+          break;
+        case 1:
+          this.card1.setState(scope.Card.STATE_SHOW);
+          this.card2.setState(scope.Card.STATE_HIDDEN);
+          this.card3.setState(scope.Card.STATE_HIDDEN);
+          this.card4.setState(scope.Card.STATE_HIDDEN);
+          break;
+        case 2:
+          this.card1.setState(scope.Card.STATE_SHOW);
+          this.card2.setState(scope.Card.STATE_SHOW);
+          this.card3.setState(scope.Card.STATE_HIDDEN);
+          this.card4.setState(scope.Card.STATE_HIDDEN);
+          break;
+        case 3:
+          this.card1.setState(scope.Card.STATE_SHOW);
+          this.card2.setState(scope.Card.STATE_SHOW);
+          this.card3.setState(scope.Card.STATE_SHOW);
+          this.card4.setState(scope.Card.STATE_SHOW);
+          break;
       }
     };
 

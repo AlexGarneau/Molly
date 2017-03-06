@@ -10,9 +10,9 @@
     s.BUTTON_BG_OVER = "games/memory/assets/images/ButtonOver.png";
     s.BUTTON_BG_DOWN = "games/memory/assets/images/ButtonDown.png";
 
-    s.BUTTON_ARROW_UP = "games/memory/assets/images/RightButtonUp.png";
-    s.BUTTON_ARROW_OVER = "games/memory/assets/images/RightButtonOver.png";
-    s.BUTTON_ARROW_DOWN = "games/memory/assets/images/RightButtonPress.png";
+    s.BUTTON_ARROW_UP = "games/memory/assets/images/ThickArrowUp.png";
+    s.BUTTON_ARROW_OVER = "games/memory/assets/images/ThickArrowUp.png";
+    s.BUTTON_ARROW_DOWN = "games/memory/assets/images/ThickArrowDown.png";
 
     var p = {};
 
@@ -31,18 +31,12 @@
 
     p._isOver = false;
 
+    p._boxScale = 0.8;
+
     p.initialize = function (text, type = s.TYPE_BOX) {
         this.container = new createjs.Container();
 
-        if (type == s.TYPE_ARROW) {
-          this.bg_up = new createjs.Bitmap(s.BUTTON_ARROW_UP);
-          this.bg_over = new createjs.Bitmap(s.BUTTON_ARROW_OVER);
-          this.bg_down = new createjs.Bitmap(s.BUTTON_ARROW_DOWN);
-        } else {
-          this.bg_up = new createjs.Bitmap(s.BUTTON_BG_UP);
-          this.bg_over = new createjs.Bitmap(s.BUTTON_BG_OVER);
-          this.bg_down = new createjs.Bitmap(s.BUTTON_BG_DOWN);
-        }
+        // TODO: Make buttons more solid red and box buttons about 80% size
 
         this.label = new createjs.Text(text, "40px Ostrich", 0);
         this.coverContainer = new createjs.Container();
@@ -50,6 +44,26 @@
         // Cover is for receiving the mouse click.
         this.cover = new createjs.Shape();
         this.coverContainer.addChild(this.cover);
+
+        if (type == s.TYPE_ARROW) {
+          this.bg_up = new createjs.Bitmap(s.BUTTON_ARROW_OVER);
+          this.bg_over = new createjs.Bitmap(s.BUTTON_ARROW_OVER);
+          this.bg_down = new createjs.Bitmap(s.BUTTON_ARROW_DOWN);
+          this.width = this.bg_up.image.width;
+          this.height = this.bg_up.image.height;
+        } else {
+          this.bg_up = new createjs.Bitmap(s.BUTTON_BG_OVER);
+          this.bg_over = new createjs.Bitmap(s.BUTTON_BG_OVER);
+          this.bg_down = new createjs.Bitmap(s.BUTTON_BG_DOWN);
+          this.bg_up.scaleX = this._boxScale;
+          this.bg_over.scaleX = this._boxScale;
+          this.bg_down.scaleX = this._boxScale;
+          this.setWidth(this.bg_up.image.width);
+          this.setHeight(this.bg_up.image.height);
+        }
+
+        this.bg_up.filters = [new createjs.ColorFilter(1, 0.5, 0.5, 1)];
+        this.bg_up.cache(0, 0, this.width, this.height);
 
         this.coverContainer.addEventListener("mousedown", this._onDown.bind(this));
         this.coverContainer.addEventListener("mouseout", this._onOut.bind(this));
@@ -65,14 +79,11 @@
         this.label.set({
           textAlign: "center",
           textBaseline: "middle",
-          x: this.bg_up.image.width / 2,
-          y: this.bg_up.image.height / 2
+          x: this.width * this.bg_up.scaleX / 2,
+          y: this.height * this.bg_up.scaleY / 2
         });
         this.cover.graphics.beginFill("rgba(0, 0, 0, 0.01)");
-        this.cover.graphics.drawRect(0, 0, this.bg_up.image.width, this.bg_up.image.height);
-
-        this.width = this.bg_up.image.width;
-        this.height = this.bg_up.image.height;
+        this.cover.graphics.drawRect(0, 0, this.width, this.height);
     };
 
     p.setWidth = function (value) {
@@ -80,7 +91,7 @@
             this.bg_up.image.width = value;
             this.bg_over.image.width = value;
             this.bg_down.image.width = value;
-            this.label.x = (value - this.label.textWidth) / 2;
+            this.label.x = (value - this.label.textWidth) * this.bg_up.scaleX / 2;
             this.width = value;
         }
     },
@@ -89,7 +100,7 @@
             this.bg_up.image.height = value;
             this.bg_over.image.height = value;
             this.bg_down.image.height = value;
-            this.label.y = (this.bg_up.height - this.label.textHeight) / 2;
+            this.label.y = (value - this.label.textHeight) * this.bg_up.scaleY / 2;
             this.height = value;
         }
     }

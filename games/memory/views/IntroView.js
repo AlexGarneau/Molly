@@ -33,7 +33,7 @@
         this.title = new createjs.Bitmap(s.INTRO_TITLE);
         this.subtitle = new createjs.Text("MEMORY GAME", "80px Ostrich", "#F01010");
 
-        this.poweredText = new createjs.Text("POWERED BY CREATEJS", "20px Ostrich", 0);
+        this.poweredText = new createjs.Text("POWERED BY CREATEJS - AUDIO FROM FLASHKIT", "20px Ostrich", 0);
 
         this.poweredText.x = 30;
         this.poweredText.y = (stageHeight - this.poweredText.getMeasuredHeight() - 30);
@@ -43,7 +43,7 @@
         this.easyBtn.on(scope.Button.CLICKED, this._onEasyClick.bind(this));
         this.hardBtn.on(scope.Button.CLICKED, this._onHardClick.bind(this));
 
-        this.instructionsBtn = new scope.Button("INSTRUCTIONS");
+        this.instructionsBtn = new scope.Button("HELP");
         this.instructionsBtn.on(scope.Button.CLICKED, this._onInstructionsClick.bind(this));
 
         this.container.addChild(this.background, this.bgMolly, this.title, this.subtitle, this.poweredText, this.easyBtn.container, this.hardBtn.container, this.instructionsBtn.container);

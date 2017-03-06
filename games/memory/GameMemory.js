@@ -3,6 +3,31 @@
 
     var s = {};
 
+    s.ASSETS = [
+        scope.Button.BUTTON_BG_UP,
+        scope.Button.BUTTON_BG_OVER,
+        scope.Button.BUTTON_BG_DOWN,
+        scope.Button.BUTTON_ARROW_UP,
+        scope.Button.BUTTON_ARROW_OVER,
+        scope.Button.BUTTON_ARROW_DOWN,
+        scope.Card.IMAGE_BACK,
+        scope.Card.IMAGE_FRONT,
+        scope.Card.IMAGE_1,
+        scope.Card.IMAGE_2,
+        scope.Card.IMAGE_3,
+        scope.Card.IMAGE_4,
+        scope.Card.IMAGE_5,
+        scope.Card.IMAGE_6,
+        scope.IntroView.INTRO_TITLE,
+        scope.IntroView.INTRO_BG,
+        scope.IntroView.INTRO_MOLLY
+        //"games/memory/assets/images/molly-corner-shot.png"
+        //scope.InstructionsView.INTRUCTIONS_1,
+        //scope.InstructionsView.INTRUCTIONS_2,
+        //scope.InstructionsView.INTRUCTIONS_3,
+        //scope.InstructionsView.INTRUCTIONS_4
+    ];
+
     var p = {};
     p.introView = null;
     p.gameView = null;
@@ -45,6 +70,7 @@
     p._onInstructionsStart = function () {
       this.container.removeChild(this.introView.container);
       this.container.addChild(this.instructionsView.container);
+      this.instructionsView.reset();
     };
 
     p._returnToIntro = function () {
@@ -55,7 +81,7 @@
       }
       this.container.removeChild(this.instructionsView.container);
       this.container.addChild(this.introView.container);
-      scope.Sounds.playSound(scope.Sounds.MEMORY_MUSIC_INTRO);
+      scope.Sounds.playSound(scope.Sounds.MEMORY_MUSIC_INTRO, true);
     }
 
     scope.GameMemory = scope.AbstractView.extend(p, s);

@@ -3,35 +3,6 @@
 
     var s = {};
 
-    s.GAME_MEMORY_ASSETS = [
-        scope.Button.BUTTON_BG_UP,
-        scope.Button.BUTTON_BG_OVER,
-        scope.Button.BUTTON_BG_DOWN,
-        scope.Button.BUTTON_ARROW_UP,
-        scope.Button.BUTTON_ARROW_OVER,
-        scope.Button.BUTTON_ARROW_DOWN,
-        scope.Card.IMAGE_BACK,
-        scope.Card.IMAGE_FRONT,
-        scope.Card.IMAGE_1,
-        scope.Card.IMAGE_2,
-        scope.Card.IMAGE_3,
-        scope.Card.IMAGE_4,
-        scope.Card.IMAGE_5,
-        scope.Card.IMAGE_6,
-        scope.IntroView.INTRO_TITLE,
-        scope.IntroView.INTRO_BG,
-        scope.IntroView.INTRO_MOLLY,
-        "games/memory/assets/images/molly-corner-shot.png",
-        scope.InstructionsView.INTRUCTIONS_1,
-        scope.InstructionsView.INTRUCTIONS_2,
-        scope.InstructionsView.INTRUCTIONS_3,
-        scope.InstructionsView.INTRUCTIONS_4
-    ];
-
-    s.GAME_DRESSUP_ASSETS = [
-
-    ];
-
     s.MENU = "menu";
     s.LOADER = "loader";
     s.INTRO_DRESSUP = "introDressup";
@@ -114,12 +85,12 @@
             case s.GAME_DRESSUP:
               this._viewTarget = s.GAME_DRESSUP;
               this.stage.addChild(this.loader.container);
-              this.loader.loadAssets([].concat(s.GAME_DRESSUP_ASSETS, scope.Sounds.getSoundManifest(s.GAME_DRESSUP)));
+              this.loader.loadAssets([].concat(scope.GameDressup.ASSETS, scope.Sounds.getSoundManifest(s.GAME_DRESSUP)));
               break;
             case s.GAME_MEMORY:
               this._viewTarget = s.GAME_MEMORY;
               this.stage.addChild(this.loader.container);
-              this.loader.loadAssets([].concat(s.GAME_MEMORY_ASSETS, scope.Sounds.getSoundManifest(s.GAME_MEMORY)));
+              this.loader.loadAssets([].concat(scope.GameMemory.ASSETS, scope.Sounds.getSoundManifest(s.GAME_MEMORY)));
               break;
             default: break;
         }

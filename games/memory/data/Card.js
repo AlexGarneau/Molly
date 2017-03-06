@@ -121,7 +121,6 @@
     };
 
     p.onClick = function (e) {
-        console.log("Clicked a card! " + this);
         this.trigger(s.REQUEST_FLIP, this);
     };
 
@@ -211,6 +210,26 @@
       this.cardBack.alpha = 1;
       this.cardFront.alpha = 0;
       this.cardFrontLock.alpha = 0;
+    }
+
+    p.setState = function (state) {
+      switch (state) {
+        case s.STATE_HIDDEN:
+          this.cardBack.alpha = 1;
+          this.cardFront.alpha = 0;
+          this.cardFrontLock.alpha = 0;
+          break;
+        case s.STATE_SHOW:
+          this.cardBack.alpha = 0;
+          this.cardFront.alpha = 1;
+          this.cardFrontLock.alpha = 0;
+          break;
+        case s.STATE_LOCK:
+          this.cardBack.alpha = 0;
+          this.cardFront.alpha = 0;
+          this.cardFrontLock.alpha = 1;
+          break;
+      }
     }
 
     p._onAnimationShowComplete = function () {

@@ -3,7 +3,9 @@
 
     var s = {};
 
-    s.icon = "/assets/images/icon.png";
+    s.ASSETS = [
+
+    ];
 
     var p = {};
 
